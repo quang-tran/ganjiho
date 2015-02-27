@@ -10,5 +10,8 @@ public class Driver
 			System.out.println(board);
 			board.playMove();
 		}
+		
+		System.out.println("\n\n**** WINNER ****\n\n" + board);
+		System.out.println(board.winner());
 	}
 }

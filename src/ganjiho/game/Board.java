@@ -1,5 +1,6 @@
 package ganjiho.game;
 
+import ganjiho.game.players.BlackPlayer;
 import ganjiho.game.players.Player;
 import ganjiho.game.players.WhitePlayer;
 
@@ -17,7 +18,7 @@ public class Board
 		board = new Peg[rows][rows];
 		
 		turnIndex = 0;
-		players = new Player[] {new WhitePlayer()};
+		players = new Player[] {new WhitePlayer(), new BlackPlayer()};
 	}
 	
 	public void playMove()
@@ -33,12 +34,18 @@ public class Board
 	
 	public boolean isMoveAvailable()
 	{
-		return true;
+		return players[turnIndex].checkAvailable(this);
 	}
 	
 	public boolean isCellOccupied(int row, int col)
 	{
 		return board[row - 1][col - 1] != null;
+	}
+	
+	public String winner()
+	{
+		int winnerIndex = (turnIndex + 1) % players.length;
+		return "The winner is " + players[winnerIndex];
 	}
 	
 	public String toString()

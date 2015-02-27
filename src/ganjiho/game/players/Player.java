@@ -7,7 +7,7 @@ import ganjiho.game.Peg;
 
 public abstract class Player 
 {
-	private Scanner scanner;
+	private static Scanner scanner;
 	
 	protected Peg pegType;
 	
@@ -29,40 +29,43 @@ public abstract class Player
 			scanner = new Scanner(System.in);
 		}
 		
-		System.out.print("row,col: ");
-		String input = scanner.nextLine();
-		String[] coords = input.split(",");
+		int[] move = null;
 		
-		if(coords.length != 2)
+		while(move == null)
 		{
-			System.out.println("Malformed input.");
-			return this.getMove(board);
-		}
-		
-		int[] move = new int[2];
-		try
-		{
-			move[0] = Integer.parseUnsignedInt(coords[0]);
-			move[1] = Integer.parseUnsignedInt(coords[1]);
+			System.out.print("row,col: ");
+			String input = scanner.nextLine();
+			String[] coords = input.split(",");
 			
-			if(move[0] > board.getRows() || move[1] > board.getRows())
+			if(coords.length != 2)
 			{
-				System.out.println("Input out of range.");
-				return this.getMove(board);
+				System.out.println("Malformed input.");
+				move = null;
 			}
 			
-			if(board.isCellOccupied(move[0], move[1]))
+			try
 			{
-				System.out.println("Cell is already occupied.");
-				return this.getMove(board);
+				move = new int[] {Integer.parseUnsignedInt(coords[0]), Integer.parseUnsignedInt(coords[1])};
+				if(move[0] > board.getRows() || move[1] > board.getRows())
+				{
+					System.out.println("Input out of range.");
+					move = null;
+				}
+				
+				if(board.isCellOccupied(move[0], move[1]))
+				{
+					System.out.println("Cell is already occupied.");
+					move = null;
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println("Malformed input.");
+				move = null;
 			}
 		}
-		catch(Exception e)
-		{
-			System.out.println("Malformed input.");
-			return this.getMove(board);
-		}
-		
 		return move;
 	}
+	
+	public abstract boolean checkAvailable(Board board);
 }
