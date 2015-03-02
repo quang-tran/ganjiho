@@ -33,11 +33,10 @@ public abstract class Player
 		
 		while(move == null)
 		{
-			System.out.print("row,col: ");
+			System.out.print("RowCol: ");
 			String input = scanner.nextLine();
-			String[] coords = input.split(",");
 			
-			if(coords.length != 2)
+			if(input.length() != 2)
 			{
 				System.out.println("Malformed input.");
 				move = null;
@@ -45,7 +44,7 @@ public abstract class Player
 			
 			try
 			{
-				move = new int[] {Integer.parseUnsignedInt(coords[0]), Integer.parseUnsignedInt(coords[1])};
+				move = new int[] {parseRowChar(input.charAt(0)), Integer.parseUnsignedInt(input.substring(1,2))};
 				if(move[0] > board.getRows() || move[1] > board.getRows())
 				{
 					System.out.println("Input out of range.");
@@ -65,6 +64,22 @@ public abstract class Player
 			}
 		}
 		return move;
+	}
+	
+	public int parseRowChar(char row) throws Exception
+	{
+		switch(row)
+		{
+		case 'A': case 'a':	return 1;
+		case 'B': case 'b':	return 2;
+		case 'C': case 'c':	return 3;
+		case 'D': case 'd':	return 4;
+		case 'E': case 'e':	return 5;
+		case 'F': case 'f':	return 6;
+		case 'G': case 'g':	return 7;
+		case 'H': case 'h':	return 8;
+		default: throw new Exception("Malformed input.");
+		}
 	}
 	
 	public abstract boolean checkAvailable(Board board);

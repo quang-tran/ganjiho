@@ -50,16 +50,17 @@ public class Board
 	
 	public String toString()
 	{
-		StringBuffer output = new StringBuffer();
-		for(int i = 0; i < rows + 1; i++)
+		StringBuffer output = new StringBuffer("\\\t");
+		for(int i = 1; i < rows + 1; i++)
 		{
 			output.append(i + "\t");
 		}
 		output.append("\n");
 		
+		char rowLabel = 'A';
 		for(int i = 0; i < rows; i++)
 		{
-			output.append(i+1 + "\t");
+			output.append(rowLabel++ + "\t");
 			for(int j = 0; j < rows; j++)
 			{
 				String cell = board[i][j] == null ? "-" : board[i][j].toString();
