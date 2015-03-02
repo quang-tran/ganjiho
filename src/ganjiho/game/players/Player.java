@@ -66,7 +66,7 @@ public abstract class Player
 		return move;
 	}
 	
-	public int parseRowChar(char row) throws Exception
+	private int parseRowChar(char row) throws Exception
 	{
 		switch(row)
 		{
