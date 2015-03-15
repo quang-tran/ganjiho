@@ -79,8 +79,36 @@ public class Board
 		return output.toString();
 	}
 
+	/**
+	 * Create a deep copy of the current board
+	 * @return Board b that has the same state as this
+	 */
+	public Board copy()
+	{
+		Board b = new Board(this.rows);
+		
+		for(int i = 0; i < rows; i++)
+		{
+			for(int j = 0; j < rows; j++)
+			{
+				Peg p = this.getCell(i+1, j+1);
+				if(p != null)
+				{
+					b.placePeg(i+1, j+1, p);
+				}
+			}
+		}
+		
+		return b;
+	}
+	
 	public int getRows() 
 	{
 		return rows;
+	}
+	
+	public Peg getCell(int row, int col)
+	{
+		return board[row - 1][col - 1];
 	}
 }
