@@ -18,13 +18,21 @@ public class Board
 		board = new Peg[rows][rows];
 		
 		turnIndex = 0;
-		players = new Player[] {new WhitePlayer(), new BlackPlayer()};
+		players = new Player[] {new WhitePlayer(null), new BlackPlayer(null)};
 	}
 	
-	public void playMove()
+	public void playMove() throws Exception
 	{
-		players[turnIndex].playTurn(this);
-		turnIndex = (turnIndex + 1) % players.length;
+		try
+		{
+			players[turnIndex].playTurn(this);
+			turnIndex = (turnIndex + 1) % players.length;
+		}
+		catch(Exception e)
+		{
+			turnIndex = (turnIndex + 1) % players.length;
+			throw e;
+		}
 	}
 	
 	public void placePeg(int row, int col, Peg pegType)

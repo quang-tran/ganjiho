@@ -5,22 +5,36 @@ import ganjiho.game.PegBlack;
 
 public class BlackPlayer extends Player 
 {
-
-	public BlackPlayer() 
+	public BlackPlayer(PlayerAI ai) 
 	{
-		super(new PegBlack());
+		super(new PegBlack(), ai);
 	}
 
 	@Override
-	public void playTurn(Board board) 
+	public void playTurn(Board board) throws Exception 
 	{
 		System.out.println("Black turn");
-		int[] move = getMove(board);
+		int[] move;
+		if(ai == null)
+		{
+			move = getMove(board);
+		}
+		else
+		{
+			move = ai.getMove(board);
+		}
 		
 		while(move[1] + 1 > board.getRows() || board.isCellOccupied(move[0], move[1] + 1))
 		{
-			System.out.println("No horizontal space for that space.");
-			move = getMove(board);
+			if(ai == null)
+			{
+				System.out.println("No horizontal space for that space.");
+				move = getMove(board);
+			}
+			else
+			{
+				throw new Exception("AI has played an invalid move. Human player wins.");
+			}
 		}
 		
 		board.placePeg(move[0], move[1], pegType);

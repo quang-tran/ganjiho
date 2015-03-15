@@ -5,9 +5,9 @@ import ganjiho.game.PegWhite;
 
 public class WhitePlayer extends Player 
 {
-	public WhitePlayer()
+	public WhitePlayer(PlayerAI ai)
 	{
-		super(new PegWhite());
+		super(new PegWhite(), ai);
 	}
 	
 	@Override

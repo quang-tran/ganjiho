@@ -10,16 +10,19 @@ public abstract class Player
 	private static Scanner scanner;
 	
 	protected Peg pegType;
+	protected PlayerAI ai;
 	
-	public Player(Peg pegType)
+	public Player(Peg pegType, PlayerAI ai)
 	{
 		this.pegType = pegType;
+		this.ai = ai;
 	}
 	
 	/**
 	 * Place a pair of pegs onto the board
+	 * @throws Exception if AI plays an invalid move
 	 */
-	public abstract void playTurn(Board board);
+	public abstract void playTurn(Board board) throws Exception;
 
 	protected int[] getMove(Board board) 
 	{

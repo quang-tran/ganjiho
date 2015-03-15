@@ -5,10 +5,17 @@ public class Driver
 	public static void main(String[] args)
 	{
 		Board board = new Board(8);
-		while(board.isMoveAvailable())
+		try
 		{
-			System.out.println(board);
-			board.playMove();
+			while(board.isMoveAvailable())
+			{
+				System.out.println(board);
+				board.playMove();
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
 		}
 		
 		System.out.println("\n\n**** WINNER ****\n\n" + board);
