@@ -42,8 +42,9 @@ public class BlackPlayer extends Player
 	}
 	
 	@Override
-	public boolean checkAvailable(Board board) 
+	public int checkAvailable(Board board) 
 	{
+		int available = 0;
 		int rows = board.getRows();
 		for(int row = 1; row <= rows; row++)
 		{
@@ -51,12 +52,12 @@ public class BlackPlayer extends Player
 			{
 				if(!board.isCellOccupied(row, col) && !board.isCellOccupied(row, col - 1))
 				{
-					return true;
+					available++;
 				}
 			}
 		}
 		
-		return false;
+		return available;
 	}
 	
 	public String toString()

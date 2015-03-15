@@ -42,7 +42,7 @@ public class Board
 	
 	public boolean isMoveAvailable()
 	{
-		return players[turnIndex].checkAvailable(this);
+		return players[turnIndex].checkAvailable(this) > 0;
 	}
 	
 	public boolean isCellOccupied(int row, int col)

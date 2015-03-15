@@ -85,5 +85,10 @@ public abstract class Player
 		}
 	}
 	
-	public abstract boolean checkAvailable(Board board);
+	/**
+	 * Check how many moves are available to a player on a specific board configuration
+	 * @param board Current state of the board
+	 * @return The number of available moves left
+	 */
+	public abstract int checkAvailable(Board board);
 }
