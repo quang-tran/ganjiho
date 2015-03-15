@@ -18,12 +18,12 @@ public class GameStateNode
 	{
 		this.parent = parent;
 		this.children = new ArrayList<GameStateNode>();
-		
 		this.board = board;
 	}
 	
-	public void addChild(GameStateNode child)
+	public void addChild(Board nextMove)
 	{
+		GameStateNode child = new GameStateNode(this, nextMove);
 		children.add(child);
 	}
 	
