@@ -22,6 +22,7 @@ public class BlackPlayer extends Player
 		else
 		{
 			move = ai.getMove(board);
+			System.out.println("AI played move: " + rowToChar(move[0]) + "" + move[1]);
 		}
 		
 		while(move[1] + 1 > board.getRows() || board.isCellOccupied(move[0], move[1] + 1))
@@ -58,6 +59,23 @@ public class BlackPlayer extends Player
 		}
 		
 		return available;
+	}
+	
+	public char rowToChar(int row)
+	{
+		switch(row)
+		{
+		case 0: return 'A';
+		case 1: return 'B';
+		case 2: return 'C';
+		case 3: return 'D';
+		case 4: return 'E';
+		case 5: return 'F';
+		case 6: return 'G';
+		case 7: return 'H';
+		}
+		
+		return 'x';
 	}
 	
 	public String toString()
