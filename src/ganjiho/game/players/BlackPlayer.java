@@ -28,7 +28,7 @@ public class BlackPlayer extends Player
 		{
 			if(ai == null)
 			{
-				System.out.println("No horizontal space for that space.");
+				System.out.println("No horizontal space for that move.");
 				move = getMove(board);
 			}
 			else

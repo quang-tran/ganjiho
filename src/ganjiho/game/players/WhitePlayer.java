@@ -11,15 +11,30 @@ public class WhitePlayer extends Player
 	}
 	
 	@Override
-	public void playTurn(Board board) 
+	public void playTurn(Board board) throws Exception 
 	{
 		System.out.println("White turn");
-		int[] move = getMove(board);
+		int[] move;
+		if(ai == null)
+		{
+			move = getMove(board);
+		}
+		else
+		{
+			move = ai.getMove(board);
+		}
 		
 		while(move[0] + 1 > board.getRows() || board.isCellOccupied(move[0] + 1, move[1]))
 		{
-			System.out.println("No vertical space for that space.");
-			move = getMove(board);
+			if(ai == null)
+			{
+				System.out.println("No vertical space for that move.");
+				move = getMove(board);
+			}
+			else
+			{
+				throw new Exception("AI has played an invalid move. Human player wins.");
+			}
 		}
 		
 		board.placePeg(move[0], move[1], pegType);
