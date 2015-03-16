@@ -1,5 +1,7 @@
 package ganjiho.game.players;
 
+import java.util.Calendar;
+
 import ganjiho.game.Board;
 import ganjiho.game.PegWhite;
 
@@ -21,7 +23,12 @@ public class WhitePlayer extends Player
 		}
 		else
 		{
+			long start = Calendar.getInstance().getTimeInMillis();
 			move = ai.getMove(board);
+			System.out.println("AI played move: " + ai.moveToCell(move));
+			long end = Calendar.getInstance().getTimeInMillis();
+			
+			System.out.println("Time to calculate move: " + (end - start));
 		}
 		
 		while(move[0] + 1 > board.getRows() || board.isCellOccupied(move[0] + 1, move[1]))

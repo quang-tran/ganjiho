@@ -13,7 +13,7 @@ public class Driver
 		WhitePlayer white = new WhitePlayer(null);
 		BlackPlayer black = new BlackPlayer(null);
 		
-		//Heuristic whiteh = new HeuristicBlockAndConserve(black, white);
+		//Heuristic whiteh = new HeuristicBlockingMoves(black);
 		Heuristic blackh = new HeuristicBlockingMoves(white);
 		
 		//white = new WhitePlayer(new WhitePlayerAI(whiteh));

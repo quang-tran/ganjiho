@@ -1,5 +1,7 @@
 package ganjiho.game.players;
 
+import java.util.Calendar;
+
 import ganjiho.game.Board;
 import ganjiho.game.PegBlack;
 
@@ -21,8 +23,12 @@ public class BlackPlayer extends Player
 		}
 		else
 		{
+			long start = Calendar.getInstance().getTimeInMillis();
 			move = ai.getMove(board);
-			System.out.println("AI played move: " + rowToChar(move[0]) + "" + move[1]);
+			System.out.println("AI played move: " + ai.moveToCell(move));
+			long end = Calendar.getInstance().getTimeInMillis();
+			
+			System.out.println("Time to calculate move: " + (end - start)/1000.0 + " seconds.");
 		}
 		
 		while(move[1] + 1 > board.getRows() || board.isCellOccupied(move[0], move[1] + 1))
@@ -61,22 +67,7 @@ public class BlackPlayer extends Player
 		return available;
 	}
 	
-	public char rowToChar(int row)
-	{
-		switch(row)
-		{
-		case 0: return 'A';
-		case 1: return 'B';
-		case 2: return 'C';
-		case 3: return 'D';
-		case 4: return 'E';
-		case 5: return 'F';
-		case 6: return 'G';
-		case 7: return 'H';
-		}
-		
-		return 'x';
-	}
+	
 	
 	public String toString()
 	{
