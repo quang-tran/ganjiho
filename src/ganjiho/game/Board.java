@@ -1,8 +1,6 @@
 package ganjiho.game;
 
-import ganjiho.game.players.BlackPlayer;
 import ganjiho.game.players.Player;
-import ganjiho.game.players.WhitePlayer;
 
 public class Board 
 {
@@ -12,13 +10,13 @@ public class Board
 	private int turnIndex;
 	private Player[] players;
 	
-	public Board(int rows)
+	public Board(int rows, Player white, Player black)
 	{
 		this.rows = rows;
 		board = new Peg[rows][rows];
 		
 		turnIndex = 0;
-		players = new Player[] {new WhitePlayer(null), new BlackPlayer(null)};
+		players = new Player[] {white, black};
 	}
 	
 	public void playMove() throws Exception
@@ -80,12 +78,12 @@ public class Board
 	}
 
 	/**
-	 * Create a deep copy of the current board
+	 * Create a deep copy of the current board state, with no players
 	 * @return Board b that has the same state as this
 	 */
-	public Board copy()
+	public Board copyState()
 	{
-		Board b = new Board(this.rows);
+		Board b = new Board(this.rows, null, null);
 		
 		for(int i = 0; i < rows; i++)
 		{
