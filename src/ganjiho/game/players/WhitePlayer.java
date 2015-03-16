@@ -28,7 +28,7 @@ public class WhitePlayer extends Player
 			System.out.println("AI played move: " + ai.moveToCell(move));
 			long end = Calendar.getInstance().getTimeInMillis();
 			
-			System.out.println("Time to calculate move: " + (end - start));
+			System.out.println("Time to calculate move: " + (end - start)/1000.0 + " seconds.");
 		}
 		
 		while(move[0] + 1 > board.getRows() || board.isCellOccupied(move[0] + 1, move[1]))

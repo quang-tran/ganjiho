@@ -17,6 +17,7 @@ public class GameStateNode
 	
 	private Board board;
 	private int heuristicValue;
+	private boolean visited;
 	
 	public GameStateNode(GameStateNode parent, Board board)
 	{
@@ -91,5 +92,31 @@ public class GameStateNode
 				}
 			}
 		}
+	}
+	
+	public void print() 
+	{
+        print("", true);
+    }
+
+    private void print(String prefix, boolean isTail)
+    {	
+        System.out.println(prefix + (isTail ? "--- " : "|-- ") + (visited ? heuristicValue : "pruned"));
+        for (int i = 0; i < children.size() - 1; i++) {
+            children.get(i).print(prefix + (isTail ? "    " : "|   "), false);
+        }
+        if (children.size() > 0) {
+            children.get(children.size() - 1).print(prefix + (isTail ?"    " : "|   "), true);
+        }
+    }
+
+	public boolean isVisited() 
+	{
+		return visited;
+	}
+
+	public void setVisited(boolean visited) 
+	{
+		this.visited = visited;
 	}
 }

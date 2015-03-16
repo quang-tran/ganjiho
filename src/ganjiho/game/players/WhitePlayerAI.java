@@ -28,6 +28,8 @@ public class WhitePlayerAI extends PlayerAI
 			}
 		}
 		
+		//root.print();
+		
 		Board nextBoard = nextState.getBoard();
 		return getNextMove(board, nextBoard);
 	}
@@ -35,6 +37,7 @@ public class WhitePlayerAI extends PlayerAI
 	private int minimax(GameStateNode node, int depth, int alpha, int beta, boolean maximizing)
 	{
 		Board current = node.getBoard();
+		node.setVisited(true);
 		if(depth == 0 || !current.isMoveAvailable(maximizing))
 		{
 			int heuristicValue = h.calculate(current);
@@ -52,13 +55,12 @@ public class WhitePlayerAI extends PlayerAI
 			{
 				max = Math.max(max, minimax(child, depth - 1, alpha, beta, false));
 				alpha = Math.max(alpha, max);
+				node.setHeuristicValue(max);
 				
 				if(alpha > beta)
 				{
 					break;
 				}
-				
-				node.setHeuristicValue(max);
 			}
 			return max;
 		}
@@ -72,13 +74,12 @@ public class WhitePlayerAI extends PlayerAI
 			{
 				min = Math.min(min, minimax(child, depth - 1, alpha, beta, false));
 				beta = Math.min(beta, min);
+				node.setHeuristicValue(min);
 				
 				if(alpha > beta)
 				{
 					break;
 				}
-				
-				node.setHeuristicValue(min);
 			}
 			return min;
 		}
