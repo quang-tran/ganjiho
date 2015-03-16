@@ -1,6 +1,9 @@
 package ganjiho.heuristic;
 
 import ganjiho.game.Board;
+import ganjiho.game.Peg;
+import ganjiho.game.PegBlack;
+import ganjiho.game.PegWhite;
 
 import java.util.ArrayList;
 
@@ -13,18 +16,13 @@ public class GameStateNode
 	private ArrayList<GameStateNode> children;
 	
 	private Board board;
+	private int heuristicValue;
 	
 	public GameStateNode(GameStateNode parent, Board board)
 	{
 		this.parent = parent;
 		this.children = new ArrayList<GameStateNode>();
 		this.board = board;
-	}
-	
-	public void addChild(Board nextMove)
-	{
-		GameStateNode child = new GameStateNode(this, nextMove);
-		children.add(child);
 	}
 	
 	public GameStateNode getParent()
@@ -40,5 +38,58 @@ public class GameStateNode
 	public Board getBoard()
 	{
 		return board;
+	}
+
+	public int getHeuristicValue() 
+	{
+		return heuristicValue;
+	}
+
+	public void setHeuristicValue(int heuristicValue) 
+	{
+		this.heuristicValue = heuristicValue;
+	}
+	
+	public void generateMoveList(boolean whiteTurn)
+	{
+		int rows = board.getRows() + 1;
+		if(whiteTurn)
+		{
+			for(int row = 2; row < rows; row++)
+			{
+				for(int col = 1; col < rows; col++)
+				{
+					if(!board.isCellOccupied(row, col) && !board.isCellOccupied(row - 1, col))
+					{
+						Board newBoard = board.copyState();
+						Peg whitePeg = new PegWhite();
+						newBoard.placePeg(row, col, whitePeg);
+						newBoard.placePeg(row-1, col, whitePeg);
+						
+						GameStateNode n = new GameStateNode(this, newBoard);
+						children.add(n);
+					}
+				}
+			}
+		}
+		else
+		{
+			for(int row = 1; row < rows; row++)
+			{
+				for(int col = 2; col < rows; col++)
+				{
+					if(!board.isCellOccupied(row, col) && !board.isCellOccupied(row, col - 1))
+					{
+						Board newBoard = board.copyState();
+						Peg blackPeg = new PegBlack();
+						newBoard.placePeg(row, col, blackPeg);
+						newBoard.placePeg(row, col-1, blackPeg);
+						
+						GameStateNode n = new GameStateNode(this, newBoard);
+						children.add(n);
+					}
+				}
+			}
+		}
 	}
 }

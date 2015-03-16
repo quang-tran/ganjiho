@@ -6,7 +6,7 @@ import ganjiho.game.Board;
 
 import java.util.ArrayList;
 
-public class BlackPlayerAI extends PlayerAI implements Heuristic
+public class BlackPlayerAI extends PlayerAI
 {
 	public BlackPlayerAI(Heuristic h)
 	{
@@ -15,58 +15,89 @@ public class BlackPlayerAI extends PlayerAI implements Heuristic
 	
 	public int[] getMove(Board board)
 	{
-		int[] move = null;
+		GameStateNode root = new GameStateNode(null, board);
+		int value = minimax(root, 3, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
 		
-		return move;
+		GameStateNode nextState = null;
+		for(GameStateNode n : root.getChildren())
+		{
+			if(n.getHeuristicValue() == value)
+			{
+				nextState = n;
+				break;
+			}
+		}
+		
+		Board nextBoard = nextState.getBoard();
+		return getNextMove(board, nextBoard);
 	}
 	
-	/*private int[] Minimax(GameStateNode node, int level, BlackPlayerAI player)
+	private int minimax(GameStateNode node, int depth, int alpha, int beta, boolean maximizing)
 	{
-		int value = 0;
-		int bestPossibleScore = Integer.MAX_VALUE;
-		int currentScore;
-		int bestRow = -1;
-		int bestCol = -1;
-		
-		ArrayList<int[]> nextPossibleMoves = GeneratePossibleMoves(node);
-		
-		if(level == 0 || node.getChildren() == null)
+		Board current = node.getBoard();
+		if(depth == 0 || !current.isMoveAvailable(!maximizing))
 		{
-			bestPossibleScore = calculate(node.getBoard());
+			int heuristicValue = h.calculate(current);
+			node.setHeuristicValue(heuristicValue);
+			return heuristicValue;
+		}
+		
+		if(maximizing)
+		{
+			node.generateMoveList(false);
+			int max = Integer.MIN_VALUE;
+			ArrayList<GameStateNode> children = node.getChildren();
+			
+			for(GameStateNode child : children)
+			{
+				max = Math.max(max, minimax(child, depth - 1, alpha, beta, false));
+				alpha = Math.max(alpha, max);
+				
+				if(alpha > beta)
+				{
+					break;
+				}
+				
+				node.setHeuristicValue(max);
+			}
+			return max;
 		}
 		else
 		{
+			node.generateMoveList(true);
+			int min = Integer.MAX_VALUE;
+			ArrayList<GameStateNode> children = node.getChildren();
 			
+			for(GameStateNode child : children)
+			{
+				min = Math.min(min, minimax(child, depth - 1, alpha, beta, false));
+				beta = Math.min(beta, min);
+				
+				if(alpha > beta)
+				{
+					break;
+				}
+				
+				node.setHeuristicValue(min);
+			}
+			return min;
 		}
-	}*/
-	
-	public int calculate(Board b)
-	{
-		return 0;
 	}
 	
-	private ArrayList<int[]> GeneratePossibleMoves(GameStateNode node)
+	private int[] getNextMove(Board current, Board next)
 	{
-		ArrayList<int[]> nextPossibleMoves = new ArrayList<int[]>();
-		int rows = node.getBoard().getRows();
-		
-		if(!node.getBoard().isMoveAvailable())
+		int rows = current.getRows() + 1;
+		for(int i = 1; i < rows; i++)
 		{
-			return nextPossibleMoves;
-		}
-		
-		for(int row = 0; row < rows; row++)
-		{
-			for (int col = 0; col < rows; col++)
+			for(int j = 1; j < rows; j++)
 			{
-				if(!node.getBoard().isCellOccupied(row+1, col+1) && !node.getBoard().isCellOccupied(row+1, col+2))
+				if(!current.isCellOccupied(i, j) && next.isCellOccupied(i, j))
 				{
-					nextPossibleMoves.add(new int[] {row+1, col+1, col+2});
-					//add the next board states to child?
+					return new int[] {i, j};
 				}
 			}
 		}
 		
-		return nextPossibleMoves;
+		return null;
 	}
 }

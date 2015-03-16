@@ -7,7 +7,6 @@ public class Board
 	private int rows;
 	private Peg[][] board;
 	
-	private int turnIndex;
 	private Player[] players;
 	
 	public Board(int rows, Player white, Player black)
@@ -15,20 +14,24 @@ public class Board
 		this.rows = rows;
 		board = new Peg[rows][rows];
 		
-		turnIndex = 0;
 		players = new Player[] {white, black};
 	}
 	
-	public void playMove() throws Exception
+	public void playMove(boolean whiteTurn) throws Exception
 	{
 		try
 		{
-			players[turnIndex].playTurn(this);
-			turnIndex = (turnIndex + 1) % players.length;
+			if(whiteTurn)
+			{
+				players[0].playTurn(this);
+			}
+			else
+			{
+				players[1].playTurn(this);
+			}
 		}
 		catch(Exception e)
 		{
-			turnIndex = (turnIndex + 1) % players.length;
 			throw e;
 		}
 	}
@@ -38,20 +41,41 @@ public class Board
 		board[row - 1][col - 1] = pegType;
 	}
 	
-	public boolean isMoveAvailable()
+	public boolean isMoveAvailable(boolean whiteTurn)
 	{
-		return players[turnIndex].checkAvailable(this) > 0;
+		int rows = this.rows + 1;
+		if(whiteTurn)
+		{
+			for(int row = 2; row < rows; row++)
+			{
+				for(int col = 1; col < rows; col++)
+				{
+					if(!isCellOccupied(row, col) && !isCellOccupied(row - 1, col))
+					{
+						return true;
+					}
+				}
+			}
+		}
+		else
+		{
+			for(int row = 1; row < rows; row++)
+			{
+				for(int col = 2; col < rows; col++)
+				{
+					if(!isCellOccupied(row, col) && !isCellOccupied(row, col - 1))
+					{
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 	public boolean isCellOccupied(int row, int col)
 	{
 		return board[row - 1][col - 1] != null;
-	}
-	
-	public String winner()
-	{
-		int winnerIndex = (turnIndex + 1) % players.length;
-		return "The winner is " + players[winnerIndex];
 	}
 	
 	public String toString()
