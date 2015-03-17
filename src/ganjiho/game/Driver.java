@@ -1,6 +1,7 @@
 package ganjiho.game;
 
 import ganjiho.game.players.BlackPlayer;
+import ganjiho.game.players.BlackPlayerAI;
 import ganjiho.game.players.WhitePlayer;
 import ganjiho.game.players.WhitePlayerAI;
 import ganjiho.heuristic.Heuristic;
@@ -13,13 +14,13 @@ public class Driver
 		WhitePlayer white = new WhitePlayer(null);
 		BlackPlayer black = new BlackPlayer(null);
 		
-		Heuristic whiteh = new HeuristicBlockingMoves(black);
-		white = new WhitePlayer(new WhitePlayerAI(whiteh));
+		//Heuristic whiteh = new HeuristicBlockingMoves(black);
+		//white = new WhitePlayer(new WhitePlayerAI(whiteh));
 		
-		//Heuristic blackh = new HeuristicBlockingMoves(white);
-		//black = new BlackPlayer(new BlackPlayerAI(blackh));
+		Heuristic blackh = new HeuristicBlockingMoves(white);
+		black = new BlackPlayer(new BlackPlayerAI(blackh));
 		
-		Board board = new Board(8, white, black);
+		Board board = new Board(6, white, black);
 		
 		boolean whiteTurn = true;
 		try
