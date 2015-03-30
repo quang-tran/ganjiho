@@ -8,7 +8,7 @@ public class HeuristicBlockAndConserve implements Heuristic
 	private Player block;
 	private Player conserve;
 	
-	public HeuristicBlockAndConserve(Player block, Player conserve)
+	public HeuristicBlockAndConserve(Player conserve, Player block)
 	{
 		this.block = block;
 		this.conserve = conserve;
@@ -16,6 +16,6 @@ public class HeuristicBlockAndConserve implements Heuristic
 	@Override
 	public int calculate(Board b) 
 	{
-		return conserve.checkAvailable(b) - block.checkAvailable(b) + 1;
+		return conserve.checkAvailable(b) - block.checkAvailable(b);
 	}
 }

@@ -37,12 +37,13 @@ public class WhitePlayer extends Player
 	public int checkAvailable(Board board) 
 	{
 		int available = 0;
-		int rows = board.getRows();
-		for(int col = 1; col <= rows; col++)
+		int cols = board.getRows() + 1;
+		int rows = cols - 1;
+		for(int col = 1; col < cols; col++)
 		{
-			for(int row = 2; row <= rows; row++)
+			for(int row = 1; row < rows; row++)
 			{
-				if(!board.isCellOccupied(row, col) && !board.isCellOccupied(row - 1, col))
+				if(!board.isCellOccupied(row, col) && !board.isCellOccupied(row + 1, col))
 				{
 					available++;
 				}
@@ -55,7 +56,21 @@ public class WhitePlayer extends Player
 	@Override
 	public int checkGuaranteed(Board board)
 	{
-		return 0;
+		int guaranteed = 0;
+		int cols = board.getRows() + 1;
+		int rows = cols - 1;
+		for(int col = 1; col < cols; col++)
+		{
+			for(int row = 1; row < rows; row++)
+			{
+				if(!board.isCellOccupied(row, col) && !board.isCellOccupied(row + 1, col))
+				{
+					guaranteed++;
+					row++;
+				}
+			}
+		}
+		return guaranteed;
 	}
 	
 	public String toString()

@@ -15,6 +15,6 @@ public class HeuristicBlockingMoves implements Heuristic
 	@Override
 	public int calculate(Board b) 
 	{
-		return 1 - player.checkAvailable(b);
+		return -player.checkAvailable(b);
 	}
 }

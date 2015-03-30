@@ -35,6 +35,9 @@ public abstract class PlayerAI
 		case 6: cell += 'F'; break;
 		case 7: cell += 'G'; break;
 		case 8: cell += 'H'; break;
+		case 9: cell += 'I'; break;
+		case 10: cell += 'J'; break;
+		case 11: cell += 'K'; break;
 		}
 		
 		cell += move[1];

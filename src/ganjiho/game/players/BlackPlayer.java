@@ -37,12 +37,13 @@ public class BlackPlayer extends Player
 	public int checkAvailable(Board board) 
 	{
 		int available = 0;
-		int rows = board.getRows();
-		for(int row = 1; row <= rows; row++)
+		int rows = board.getRows() + 1;
+		int cols = rows - 1;
+		for(int row = 1; row < rows; row++)
 		{
-			for(int col = 2; col <= rows; col++)
+			for(int col = 1; col < cols; col++)
 			{
-				if(!board.isCellOccupied(row, col) && !board.isCellOccupied(row, col - 1))
+				if(!board.isCellOccupied(row, col) && !board.isCellOccupied(row, col + 1))
 				{
 					available++;
 				}
@@ -55,7 +56,22 @@ public class BlackPlayer extends Player
 	@Override
 	public int checkGuaranteed(Board board)
 	{
-		return 0;
+		int guaranteed = 0;
+		int rows = board.getRows() + 1;
+		int cols = rows - 1;
+		for(int row = 1; row < rows; row++)
+		{
+			for(int col = 1; col < cols; col++)
+			{
+				if(!board.isCellOccupied(row, col) && !board.isCellOccupied(row, col + 1))
+				{
+					guaranteed++;
+					col++;
+				}
+			}
+		}
+		
+		return guaranteed;
 	}
 	
 	public String toString()
