@@ -47,7 +47,7 @@ public abstract class Player
 			
 			try
 			{
-				move = new int[] {parseRowChar(input.charAt(0)), Integer.parseUnsignedInt(input.substring(1,2))};
+				move = new int[] {parseRowChar(input.charAt(0)), Integer.parseUnsignedInt(input.substring(1))};
 				if(move[0] > board.getRows() || move[1] > board.getRows())
 				{
 					System.out.println("Input out of range.");
@@ -81,6 +81,9 @@ public abstract class Player
 		case 'F': case 'f':	return 6;
 		case 'G': case 'g':	return 7;
 		case 'H': case 'h':	return 8;
+		case 'I': case 'i': return 9;
+		case 'J': case 'j': return 10;
+		case 'K': case 'k': return 11;
 		default: throw new Exception("Malformed input.");
 		}
 	}
