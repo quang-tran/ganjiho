@@ -17,7 +17,7 @@ public class HeuristicGuaranteed implements Heuristic
 	@Override
 	public int calculate(Board b) 
 	{
-		return player.checkGuaranteed(b) - opponent.checkGuaranteed(b);
+		return player.checkGuaranteed(b) - opponent.checkGuaranteed(b)*2;
 	}
 
 }

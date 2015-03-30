@@ -16,6 +16,6 @@ public class HeuristicBlockAndConserve implements Heuristic
 	@Override
 	public int calculate(Board b) 
 	{
-		return conserve.checkAvailable(b) - block.checkAvailable(b);
+		return conserve.checkAvailable(b) - block.checkAvailable(b)*2;
 	}
 }
