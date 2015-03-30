@@ -1,7 +1,5 @@
 package ganjiho.game.players;
 
-import java.util.Calendar;
-
 import ganjiho.game.Board;
 import ganjiho.game.PegWhite;
 
@@ -16,20 +14,7 @@ public class WhitePlayer extends Player
 	public void playTurn(Board board) throws Exception 
 	{
 		System.out.println("White turn");
-		int[] move;
-		if(ai == null)
-		{
-			move = getMove(board);
-		}
-		else
-		{
-			long start = Calendar.getInstance().getTimeInMillis();
-			move = ai.getMove(board);
-			System.out.println("AI played move: " + ai.moveToCell(move));
-			long end = Calendar.getInstance().getTimeInMillis();
-			
-			System.out.println("Time to calculate move: " + (end - start)/1000.0 + " seconds.");
-		}
+		int[] move = getMove(board);
 		
 		while(move[0] + 1 > board.getRows() || board.isCellOccupied(move[0] + 1, move[1]))
 		{
@@ -65,6 +50,12 @@ public class WhitePlayer extends Player
 		}
 		
 		return available;
+	}
+	
+	@Override
+	public int checkGuaranteed(Board board)
+	{
+		return 0;
 	}
 	
 	public String toString()

@@ -20,7 +20,7 @@ public class Driver
 		Heuristic blackh = new HeuristicBlockingMoves(white);
 		black = new BlackPlayer(new BlackPlayerAI(blackh));
 		
-		Board board = new Board(6, white, black);
+		Board board = new Board(8, white, black);
 		
 		boolean whiteTurn = true;
 		try

@@ -1,5 +1,6 @@
 package ganjiho.game.players;
 
+import java.util.Calendar;
 import java.util.Scanner;
 
 import ganjiho.game.Board;
@@ -27,43 +28,54 @@ public abstract class Player
 	protected int[] getMove(Board board) 
 	{
 		// Get the row and column that the player wants to place a peg
-		if(scanner == null)
-		{
-			scanner = new Scanner(System.in);
-		}
-		
 		int[] move = null;
-		
-		while(move == null)
+		if(ai != null)
 		{
-			System.out.print("RowCol: ");
-			String input = scanner.nextLine();
+			long start = Calendar.getInstance().getTimeInMillis();
+			move = ai.getMove(board);
+			System.out.println("AI played move: " + ai.moveToCell(move));
+			long end = Calendar.getInstance().getTimeInMillis();
 			
-			if(input.length() != 2)
+			System.out.println("Time to calculate move: " + (end - start)/1000.0 + " seconds.");
+		}
+		else
+		{
+			if(scanner == null)
 			{
-				System.out.println("Malformed input.");
-				move = null;
+				scanner = new Scanner(System.in);
 			}
 			
-			try
+			while(move == null)
 			{
-				move = new int[] {parseRowChar(input.charAt(0)), Integer.parseUnsignedInt(input.substring(1))};
-				if(move[0] > board.getRows() || move[1] > board.getRows())
+				System.out.print("RowCol: ");
+				String input = scanner.nextLine();
+				
+				if(input.length() != 2)
 				{
-					System.out.println("Input out of range.");
+					System.out.println("Malformed input.");
 					move = null;
 				}
 				
-				if(board.isCellOccupied(move[0], move[1]))
+				try
 				{
-					System.out.println("Cell is already occupied.");
+					move = new int[] {parseRowChar(input.charAt(0)), Integer.parseUnsignedInt(input.substring(1))};
+					if(move[0] > board.getRows() || move[1] > board.getRows())
+					{
+						System.out.println("Input out of range.");
+						move = null;
+					}
+					
+					if(board.isCellOccupied(move[0], move[1]))
+					{
+						System.out.println("Cell is already occupied.");
+						move = null;
+					}
+				}
+				catch(Exception e)
+				{
+					System.out.println("Malformed input.");
 					move = null;
 				}
-			}
-			catch(Exception e)
-			{
-				System.out.println("Malformed input.");
-				move = null;
 			}
 		}
 		return move;
@@ -94,4 +106,6 @@ public abstract class Player
 	 * @return The number of available moves left
 	 */
 	public abstract int checkAvailable(Board board);
+	
+	public abstract int checkGuaranteed(Board board);
 }
