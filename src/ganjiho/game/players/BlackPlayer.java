@@ -65,6 +65,16 @@ public class BlackPlayer extends Player
 			{
 				if(!board.isCellOccupied(row, col) && !board.isCellOccupied(row, col + 1))
 				{
+					if(row > 1 && 
+						(!board.isCellOccupied(row - 1, col) || !board.isCellOccupied(row - 1, col + 1)))
+					{
+						continue;
+					}
+					if(row < cols &&
+						(!board.isCellOccupied(row + 1, col) || !board.isCellOccupied(row + 1, col + 1)))
+					{
+						continue;
+					}
 					guaranteed++;
 					col++;
 				}

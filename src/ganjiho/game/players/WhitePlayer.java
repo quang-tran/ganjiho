@@ -65,6 +65,16 @@ public class WhitePlayer extends Player
 			{
 				if(!board.isCellOccupied(row, col) && !board.isCellOccupied(row + 1, col))
 				{
+					if(col > 1 && 
+						(!board.isCellOccupied(row, col - 1) || !board.isCellOccupied(row + 1, col - 1)))
+					{
+						continue;
+					}
+					if(col < rows &&
+						(!board.isCellOccupied(row, col + 1) || !board.isCellOccupied(row + 1, col + 1)))
+					{
+						continue;
+					}
 					guaranteed++;
 					row++;
 				}
